@@ -15,4 +15,28 @@ export default class Auth {
   login = () => {
     this.auth0.authorize();
   };
+
+  handleAuthentication = () => {
+    this.auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+        this.history.push("/");
+      } else if (err) {
+        this.history.push("/");
+        alert("Error: " + err + " Check console for more details");
+        console.log(err);
+      }
+    });
+  };
+
+  setSession = authResult => {
+    // set the time the session will expire.
+    const expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime()
+    );
+
+    localStorage.setItem("access_token", authResult.accessToken);
+    localStorage.setItem("id_toke", authResult.idToken);
+    localStorage.setItem("expires_at", expiresAt);
+  };
 }
