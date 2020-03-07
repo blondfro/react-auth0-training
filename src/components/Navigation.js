@@ -14,6 +14,9 @@ class Navigation extends Component {
             <Link to="/profile">Profile</Link>
           </li>
           <li>
+            <Link to="/public">Public</Link>
+          </li>
+          <li>
             <button onClick={isAuthenticated() ? logout : login}>
               {isAuthenticated() ? "log Out" : "Log In"}
             </button>

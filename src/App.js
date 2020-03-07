@@ -5,6 +5,7 @@ import Profile from "./components/Profile";
 import Navigation from "./components/Navigation";
 import Callback from "./components/Callback";
 import Auth from "./Auth/Auth";
+import Public from "./components/public";
 
 function App({ history }) {
   const auth = new Auth(history);
@@ -33,6 +34,7 @@ function App({ history }) {
           )
         }
       />
+      <Route path="/public" component={Public} />
     </>
   );
 }
