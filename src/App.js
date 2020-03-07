@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Navigation from "./components/Navigation";
@@ -18,12 +18,21 @@ function App({ history }) {
           exact
           render={props => <Home auth={auth} {...props} />}
         />
-        <Route path="/profile" component={Profile} />
         <Route
           path="/callback"
           render={props => <Callback auth={auth} {...props} />}
         />
       </div>
+      <Route
+        path="/profile"
+        render={props =>
+          auth.isAuthenticated() ? (
+            <Profile auth={auth} {...props} />
+          ) : (
+            <Redirect to="/" />
+          )
+        }
+      />
     </>
   );
 }
