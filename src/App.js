@@ -11,7 +11,7 @@ function App({ history }) {
 
   return (
     <>
-      <Navigation />
+      <Navigation auth={auth} />
       <div className="body">
         <Route
           path="/"
