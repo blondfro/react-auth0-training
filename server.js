@@ -49,6 +49,23 @@ app.get("/courses", checkJwt, checkScope(["read:courses"]), (req, res) => {
   });
 });
 
+function checkRole(role) {
+  return function(req, res, next) {
+    const assignedRoles = req.user["http://localhost:3000/roles"];
+    if (Array.isArray(assignedRoles) && assignedRoles.includes(role)) {
+      return next();
+    } else {
+      return res.status(401).send("Insufficient role");
+    }
+  };
+}
+
+app.get("/admin", checkJwt, checkRole("admin"), (req, res) => {
+  res.json({
+    message: "hello from an admin api"
+  });
+});
+
 app.listen(PORT);
 console.log(
   "API server is running on port: " + process.env.REACT_APP_AUTH0_AUDIENCE
