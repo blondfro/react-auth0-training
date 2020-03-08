@@ -21,7 +21,7 @@ const checkJwt = jwt({
   /* this must match the algorithm selected in the Auth0 dashboard under your
       app's advanced settings under the OAuth tab. 
    */
-  algorithms: ["R5S56"]
+  algorithms: ["RS256"]
 });
 
 const app = express();
