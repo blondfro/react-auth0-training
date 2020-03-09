@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -13,6 +13,14 @@ import AuthContext from "./components/AuthContext";
 
 function App({ history }) {
   const [auth, setAuth] = useState(new Auth(history));
+  const [tokenRenewalComplete, setTokenRenewalComplete] = useState(false);
+
+  useEffect(() => {
+    auth.renewToken(() => setTokenRenewalComplete(true));
+  }, [auth]);
+
+  if (!tokenRenewalComplete) return "Loading...";
+
   return (
     <AuthContext.Provider value={auth}>
       <Navigation auth={auth} />
