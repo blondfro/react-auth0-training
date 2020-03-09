@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -9,12 +9,12 @@ import Public from "./components/public";
 import Private from "./components/Private";
 import Courses from "./components/Courses";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthContext from "./components/AuthContext";
 
 function App({ history }) {
-  const auth = new Auth(history);
-
+  const [auth, setAuth] = useState(new Auth(history));
   return (
-    <>
+    <AuthContext.Provider value={auth}>
       <Navigation auth={auth} />
       <div className="body">
         <Route
@@ -36,7 +36,7 @@ function App({ history }) {
         auth={auth}
         scopes={["read:courses"]}
       />
-    </>
+    </AuthContext.Provider>
   );
 }
 
